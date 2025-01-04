@@ -1,4 +1,173 @@
-<head></head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable Yearly Calendar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 10px;
+            max-width: 1200px;
+            margin: 20px;
+        }
+
+        .month {
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .month h3 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .day {
+            text-align: center;
+            padding: 5px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .day-number {
+            font-size: 1.2em;
+        }
+
+        .today {
+            background-color: #ffcc00;
+            font-weight: bold;
+        }
+
+        .checkbox-container {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .day.completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+
+        .checkbox-container input {
+            cursor: pointer;
+        }
+    </style>
+</head>
 <body>
-  <h1>test</h1>
+
+<div class="calendar" id="calendar"></div>
+
+<script>
+    // Get the current year
+    const currentYear = 2025;
+
+    // Function to generate the calendar for the year
+    function generateCalendar(year) {
+        const calendar = document.getElementById('calendar');
+        const months = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+
+        // Loop over each month to create the calendar
+        for (let month = 0; month < 12; month++) {
+            const monthElement = document.createElement('div');
+            monthElement.classList.add('month');
+
+            // Month title
+            const monthName = months[month];
+            const monthHeader = document.createElement('h3');
+            monthHeader.textContent = monthName;
+            monthElement.appendChild(monthHeader);
+
+            // Get the number of days in the month and first day of the month
+            const firstDayOfMonth = new Date(year, month, 1);
+            const lastDayOfMonth = new Date(year, month + 1, 0);
+            const numDaysInMonth = lastDayOfMonth.getDate();
+            const firstDayOfWeek = firstDayOfMonth.getDay();
+
+            const daysContainer = document.createElement('div');
+            daysContainer.classList.add('days');
+
+            // Empty cells before the first day of the month
+            for (let i = 0; i < firstDayOfWeek; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.classList.add('day');
+                daysContainer.appendChild(emptyDay);
+            }
+
+            // Create each day of the month with a checkbox
+            for (let day = 1; day <= numDaysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.classList.add('day');
+
+                // Add the day number
+                const dayNumber = document.createElement('div');
+                dayNumber.classList.add('day-number');
+                dayNumber.textContent = day;
+                dayElement.appendChild(dayNumber);
+
+                // Create a checkbox for marking completion
+                const checkboxContainer = document.createElement('div');
+                checkboxContainer.classList.add('checkbox-container');
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = `day-${month}-${day}`;
+                checkbox.classList.add('day-checkbox');
+                checkbox.addEventListener('change', function() {
+                    if (checkbox.checked) {
+                        dayElement.classList.add('completed');
+                    } else {
+                        dayElement.classList.remove('completed');
+                    }
+                });
+
+                checkboxContainer.appendChild(checkbox);
+                dayElement.appendChild(checkboxContainer);
+
+                // Highlight today's date
+                const today = new Date();
+                if (today.getFullYear() === year && today.getMonth() === month && today.getDate() === day) {
+                    dayElement.classList.add('today');
+                }
+
+                daysContainer.appendChild(dayElement);
+            }
+
+            monthElement.appendChild(daysContainer);
+            calendar.appendChild(monthElement);
+        }
+    }
+
+    // Generate the calendar for the specified year
+    generateCalendar(currentYear);
+</script>
+
 </body>
+</html>
