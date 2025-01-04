@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editable Yearly Calendar</title>
+    <title>Did McKay Try Touching His Toes Every Day For a Full Year?</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 100%;
             margin: 0;
             background-color: #f4f4f9;
         }
 
         .calendar {
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             max-width: 1200px;
             margin: 20px;
@@ -60,34 +61,37 @@
             font-weight: bold;
         }
 
-        .checkbox-container {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            display: flex;
-            align-items: center;
-        }
 
-        .day.completed {
+        .completed {
             text-decoration: line-through;
-            color: gray;
+            color: #b50000ee;
         }
 
-        .checkbox-container input {
-            cursor: pointer;
+        .subtitle {
+            color: #b50000ee;
         }
+
     </style>
 </head>
 <body>
-
+    <div>
+        <h1>Did McKay Try Touching His Toes Every Day For a Full Year?</h1>
+        <h3 class="subtitle">
+            A red slash through the date means McKay tried touching his toes that day
+        </h3>
+    </div>
 <div class="calendar" id="calendar"></div>
 
+
+
+</body>
 <script>
     // Get the current year
     const currentYear = 2025;
 
     // Function to generate the calendar for the year
-    function generateCalendar(year) {
+    function generateCalendar(year, completedDays) {
+        console.log('completedDays', completedDays)
         const calendar = document.getElementById('calendar');
         const months = [
             'January', 'February', 'March', 'April', 'May', 'June',
@@ -132,29 +136,14 @@
                 dayNumber.textContent = day;
                 dayElement.appendChild(dayNumber);
 
-                // Create a checkbox for marking completion
-                const checkboxContainer = document.createElement('div');
-                checkboxContainer.classList.add('checkbox-container');
-
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.id = `day-${month}-${day}`;
-                checkbox.classList.add('day-checkbox');
-                checkbox.addEventListener('change', function() {
-                    if (checkbox.checked) {
-                        dayElement.classList.add('completed');
-                    } else {
-                        dayElement.classList.remove('completed');
-                    }
-                });
-
-                checkboxContainer.appendChild(checkbox);
-                dayElement.appendChild(checkboxContainer);
-
                 // Highlight today's date
                 const today = new Date();
                 if (today.getFullYear() === year && today.getMonth() === month && today.getDate() === day) {
                     dayElement.classList.add('today');
+                }
+                
+                if(completedDays[month + 1].length > 0 && completedDays[month + 1].includes(day)){
+                    dayElement.classList.add('completed')
                 }
 
                 daysContainer.appendChild(dayElement);
@@ -165,9 +154,22 @@
         }
     }
 
-    // Generate the calendar for the specified year
-    generateCalendar(currentYear);
-</script>
+    const completedDays = {
+        1:[1, 2, 3],
+        2:[],
+        3:[],
+        4:[],
+        5:[],
+        6:[],
+        7:[],
+        8:[],
+        9:[],
+        10:[],
+        11:[],
+        12:[],
+    }
 
-</body>
+    // Generate the calendar for the specified year
+    generateCalendar(currentYear, completedDays);
+</script>
 </html>
