@@ -79,6 +79,12 @@
         <h3 class="subtitle">
             A red slash through the date means McKay tried touching his toes that day
         </h3>
+        
+        <h3 id="streak">
+        </h3>
+        <h3>
+            Consecutive days without doomscrolling: 0
+        </h3>
     </div>
 <div class="calendar" id="calendar"></div>
 
@@ -89,9 +95,28 @@
     // Get the current year
     const currentYear = 2025;
 
+    const completedDays = {
+        1:[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+        2:[],
+        3:[],
+        4:[],
+        5:[],
+        6:[],
+        7:[],
+        8:[],
+        9:[],
+        10:[],
+        11:[],
+        12:[],
+    }
+
     // Function to generate the calendar for the year
     function generateCalendar(year, completedDays) {
-        console.log('completedDays', completedDays)
+        
+        const currentStreak = Object.values(completedDays).concat().length
+        const streakContainer = document.getElementById("streak");
+        streakContainer.append("Current stretch streak: " + currentStreak.toString());
+        
         const calendar = document.getElementById('calendar');
         const months = [
             'January', 'February', 'March', 'April', 'May', 'June',
@@ -153,22 +178,6 @@
             calendar.appendChild(monthElement);
         }
     }
-
-    const completedDays = {
-        1:[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-        2:[],
-        3:[],
-        4:[],
-        5:[],
-        6:[],
-        7:[],
-        8:[],
-        9:[],
-        10:[],
-        11:[],
-        12:[],
-    }
-
     // Generate the calendar for the specified year
     generateCalendar(currentYear, completedDays);
 </script>
