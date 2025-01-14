@@ -113,7 +113,7 @@
     // Function to generate the calendar for the year
     function generateCalendar(year, completedDays) {
         
-        const currentStreak = Object.values(completedDays).concat().length
+        const currentStreak = Object.values(completedDays).concat().length + 1
         const streakContainer = document.getElementById("streak");
         streakContainer.append("Current stretch streak: " + currentStreak.toString());
         
