@@ -73,7 +73,9 @@ const ToeTouching = () => {
           day
         </h3>
 
-        <h3 id="streak"></h3>
+        <h3 id="streak">
+          Current stretch streak: {Object.values(completedDays).flat(1).length}
+        </h3>
         <h3>Consecutive days without doomscrolling: {currentDaysNoScroll}</h3>
         <h3>Max no-scroll streak: {maxDaysNoScroll}</h3>
       </div>
