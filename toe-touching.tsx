@@ -7,6 +7,46 @@ import {
 } from './const';
 import './toe-touching.css';
 
+const getDayOfYear = () => {
+  const currentDate = new Date();
+  const startOfYear = new Date(currentDate.getFullYear(), 0, 0); // January 1st of the current year
+  const diff = currentDate.getTime() - startOfYear.getTime();
+  const oneDay = 1000 * 60 * 60 * 24; // Milliseconds in a day
+
+  const dayOfYear = Math.floor(diff / oneDay);
+
+  return dayOfYear;
+};
+
+const generateStreaks = () => {
+  const streaks = Object.values(completedDays)
+    .flat(1)
+    .reduce(
+      (acc, curr) => {
+        if (curr === null) {
+          // If a null is found, start a new subarray
+          acc.push([]);
+        } else {
+          // Add the current value to the last subarray
+          if (acc.length === 0 || acc[acc.length - 1].length === 0) {
+            acc[acc.length - 1].push(curr);
+          } else {
+            acc[acc.length - 1].push(curr);
+          }
+        }
+        return acc;
+      },
+      [[]] as (number | null)[][]
+    );
+
+  // Remove the first empty array
+  if (streaks[0].length === 0) {
+    streaks.shift();
+  }
+
+  return streaks;
+};
+
 const Day = ({ day, month }: { day: number; month: number }) => {
   const today = new Date();
   const classes = ['day'];
@@ -64,6 +104,7 @@ const Calendar = () => {
 };
 
 const ToeTouching = () => {
+  const streaks = generateStreaks();
   return (
     <div>
       <div>
@@ -72,9 +113,13 @@ const ToeTouching = () => {
           A red slash through the date means McKay tried touching his toes that
           day
         </h3>
-
+        <h3>Day {getDayOfYear()}</h3>
         <h3 id="streak">
-          Current stretch streak: {Object.values(completedDays).flat(1).length}
+          Current stretch streak length: {streaks[streaks.length - 1].length}
+        </h3>
+        <h3 id="streak">
+          Longest streak:{' '}
+          {streaks.sort((a, b) => b.length - a.length)[0].length}
         </h3>
         <h3>Consecutive days without doomscrolling: {currentDaysNoScroll}</h3>
         <h3>Max no-scroll streak: {maxDaysNoScroll}</h3>
