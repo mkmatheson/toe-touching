@@ -37,7 +37,7 @@ export const completedDays: { [key: number]: (number | null)[] } = {
     27,
     28
   ],
-  3: [1, 2, 3],
+  3: [1, 2, 3, 4],
   4: [],
   5: [],
   6: [],
