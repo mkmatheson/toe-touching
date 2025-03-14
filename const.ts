@@ -1,6 +1,6 @@
 export const maxDaysNoScroll = 23;
 
-export const currentDaysNoScroll = 2;
+export const currentDaysNoScroll = 0;
 
 export const completedDays: { [key: number]: (number | null)[] } = {
   1: [
@@ -37,7 +37,7 @@ export const completedDays: { [key: number]: (number | null)[] } = {
     27,
     28
   ],
-  3: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+  3: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, null, 12, null],
   4: [],
   5: [],
   6: [],
